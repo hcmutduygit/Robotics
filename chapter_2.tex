@@ -1,0 +1,57 @@
+
+\chapter{DETERMINING D-H PARAMETERS}
+
+\section{Topic}
+Determine the Denavit-Hartenberg parameters for the robot model.
+
+\section{Theory}
+The Denavit-Hartenberg notation is introduced as a systematic method of describing the kinematic relationship ${}^{i-1}T_i$ using only four parameters \cite{1}:
+
+\begin{center}
+     \begin{tabular}{|c|l|l|}
+          \hline
+          $\alpha$ & Link twist & Describe the link itself \\
+          \hline
+          $a$ & Link length & \\
+          \hline
+          $d$ & Link offset & Describe the link's connection to neighboring link \\
+          \hline
+          $\theta$ & Joint angle & \\
+          \hline
+          \multicolumn{3}{|l|}{If the joint is:} \\
+          \hline
+          \multicolumn{2}{|l|}{Revolute: $\theta$ joint variable} & The other three are fixed link parameters \\
+          \hline
+          \multicolumn{2}{|l|}{Prismatic: $d$ joint variable} & \\
+          \hline
+          \end{tabular}
+\end{center}
+
+
+
+\section{Application}
+We got the D-H table:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$i$ & $a_i$ & $\alpha_i$ & $d_i$ & $\theta_i$ \\
+\hline
+1 & 0 & 0 & 0 & $\theta_1$ \\
+2 & 0 & 0 & $d_2$ & 0 \\
+3 & $\ell_3$ & 0 & 0 & 0 \\
+4 & $\ell_4$ & 0 & 0 & $\theta_4$ \\
+\hline
+\end{tabular}
+\end{center}
+
+
+Limitations of the D-H notation:
+\begin{align*}
+     &\ell_3 = 1000 \,\mathrm{mm}\\
+     &\ell_4 = 300 \,\mathrm{mm}\\
+     &d_2 \in [2150; 2750] \\
+     &\theta_1 \in [0^\circ; 360^\circ] \\
+     &\theta_4 \in [-90^\circ; 90^\circ]
+\end{align*}
+

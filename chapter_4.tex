@@ -1,0 +1,108 @@
+\chapter{INVERSE KINEMATIC PROBLEM}
+    \section{Topic}
+        Formulate the inverse kinematic problem. Then determine the three joint values according 
+        to the coordinates of the end-point. Make a plot for a certain case.
+    \section{Theory}
+        Inverse kinematics is the mathematical process of calculating the variable joint parameters 
+        needed to place the end of a kinematic chain which is, in this project, the position of the end 
+        effector of a robot arm [1].
+
+    \section{Application}
+
+        We have the forward kinematic equation:
+        \begin{equation*}
+            \begin{bmatrix}
+                x  \\
+                y \\
+                z 
+                \end{bmatrix}
+            = 
+            \begin{bmatrix}
+                \ell_4.\cos(\theta_1 + \theta_4) + \ell_3.\cos\theta_1 \\
+                \ell_4.\sin(\theta_1 + \theta_4) + \ell_3.\sin\theta_1 \\
+                d_2 
+                \end{bmatrix}
+        \end{equation*}
+        The position of the end-effector (X,Y,Z) can be extracted from the matrix as below:
+    \begin{align}
+        &x = \ell_4.\cos(\theta_1 + \theta_4) + \ell_3.\cos\theta_1\\
+        &y = \ell_4.\sin(\theta_1 + \theta_4) + \ell_3.\sin\theta_1\\
+        &z = d_2 \\
+    \end{align}
+    From (2.1) and (2.2) we have
+    \begin{align*}
+        x^2 + y^2 &= \ell_4^2 + \ell_3^2 + 2 \ell_3 \cdot \ell_4 \left[ \cos(\theta_1 + \theta_4) \cdot \cos \theta_1 + \sin(\theta_1 + \theta_4) \cdot \sin \theta_1 \right] \\
+        &= \ell_4^2 + \ell_3^2 + 2 \ell_3 \cdot \ell_4 \cos(\theta_1 + \theta_4 - \theta_1) \\
+        &= \ell_4^2 + \ell_3^2 + 2 \ell_3 \cdot \ell_4 \cos(\theta_4) \\
+    \end{align*}
+    Set
+    \begin{equation*}
+        a = \cos(\theta_4) = \frac{x^2 + y^2 - \ell_4^2 - \ell_3^2}{2 \ell_3 \cdot \ell_4}
+    \end{equation*}
+    Thus
+    \begin{equation*}
+        \theta_4 = \operatorname{atan2}\left( \pm \sqrt{1 - a^2}, a \right)
+    \end{equation*}
+    The x and y components can be expressed as:
+    \begin{align*}
+        x \cos \theta_1 + y \sin \theta_1 &= \ell_4 \cdot \cos(\theta_1 + \theta_4) \cos \theta_1 + \ell_4 \cdot \sin(\theta_1 + \theta_4) \cdot \sin \theta_1 + \ell_3 \\
+        &= \ell_4 \cdot \cos(\theta_4) + \ell_3 \\
+    \end{align*}
+    We can rewrite
+    \begin{equation*}
+        x \cos \theta_1 + y \sin \theta_1 = \sqrt{x^2 + y^2} \left( \frac{x}{\sqrt{x^2 + y^2}} \cos \theta_1 + \frac{y}{\sqrt{x^2 + y^2}} \sin \theta_1 \right) \\
+    \end{equation*}
+    Set
+    \begin{align*} 
+        \cos \phi &= \frac{x}{\sqrt{x^2 + y^2}} \\
+        \sin \phi &= \frac{y}{\sqrt{x^2 + y^2}} \\
+        \phi &= \operatorname{atan2}(y, x) 
+    \end{align*}
+    Thus we have
+    \begin{align*}
+        \sqrt{x^2 + y^2} \left( \cos \phi \cdot \cos \theta_1 + \sin \phi \cdot \sin \theta_1 \right) &= \ell_4 \cdot \cos(\theta_4) + \ell_3 \\
+    \end{align*}
+    Infer the following:
+    \begin{align*}
+        \cos(\theta_1 - \phi) &= \frac{\ell_4 \cdot a + \ell_3}{\sqrt{x^2 + y^2}} \\
+        \sin(\theta_1 - \phi) &= \pm \frac{\sqrt{x^2 + y^2 - \left( \ell_4 \cdot a + \ell_3 \right)^2}}{\sqrt{x^2 + y^2}} \\
+        \Rightarrow  \theta_1 - \phi &= \operatorname{atan2}\left( \pm \sqrt{x^2 + y^2 - \left( \ell_4 \cdot a + \ell_3 \right)^2}, \ell_4 \cdot a + \ell_3 \right) \\
+        \Rightarrow  \theta_1 &= \phi + \operatorname{atan2}\left( \pm \sqrt{x^2 + y^2 - \left( \ell_4 \cdot a + \ell_3 \right)^2}, \ell_4 \cdot a + \ell_3 \right) \\
+        &= \operatorname{atan2}(y, x) + \operatorname{atan2}\left( \pm \sqrt{x^2 + y^2 - \left( \ell_4 \cdot \cos(\theta_4) + \ell_3 \right)^2}, \ell_4 \cdot \cos(\theta_4) + \ell_3 \right) \\
+    \end{align*}
+    Conclusion, we have the following solution for the inverse kinematic problem:
+    \begin{align*}
+        &\begin{cases}
+        \theta_1 = \operatorname{atan2}(y, x) + \operatorname{atan2}\left( \pm \sqrt{x^2 + y^2 - \left( \ell_4 \cdot \cos(\theta_4) + \ell_3 \right)^2}, \ell_4 \cdot \cos(\theta_4) + \ell_3 \right) \\
+        d_2 = z \\
+        \theta_4 = \operatorname{atan2}\left(\pm \sqrt{1 - a^2}, a \right)
+        \end{cases} \\
+    \end{align*}
+    or can rewrite as:
+    \begin{equation*}
+        \begin{bmatrix}
+            \theta_1  \\
+            d_2 \\
+            \theta_4 
+            \end{bmatrix}
+        = 
+        \begin{bmatrix}
+            \operatorname{atan2}(y, x) + \operatorname{atan2}\left( \pm \sqrt{x^2 + y^2 - \left( \ell_4 \cdot \cos(\theta_4) + \ell_3 \right)^2}, \ell_4 \cdot \cos(\theta_4) + \ell_3 \right) \\
+            Z \\
+            \operatorname{atan2}\left(\pm \sqrt{1 - a^2}, a \right) \\
+            \end{bmatrix}
+    \end{equation*}
+    with
+    \begin{equation*}
+        a = \frac{x^2 + y^2 - \ell_4^2 - \ell_3^2}{2 \ell_3 \cdot \ell_4}
+    \end{equation*}
+
+Solution check:\\
+
+    As forward kinematic solution, with the input \( (\theta_1, d_2, \theta_4) = (0^\circ, 2200, 0^\circ) \), the position of the end-effector is \( (x, y, z) = (1300, 0, 2200) \).
+
+    Using \( (x, y, z) = (1300, 0, 2200) \) as an input to inverse function, we got \( (\theta_1, d_2, \theta_4)  = (0^\circ, 2200, 0^\circ) \).
+    
+    Similarly, using \( (x,y,z) = (-300,1000,2700) \) as an input to inverse function, we got \( (\theta_1, d_2, \theta_4) = (90^\circ,2700, 90^\circ) \). Correct.
+    
+    So we can confirm the accurate of the solution.
