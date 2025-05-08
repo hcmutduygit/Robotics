@@ -48,7 +48,16 @@ d_2 &\in [2150; 2750] \\
 \right.
 \]
 To simplify matters, we remove the mechanical constraint, the joints can be fully rotated. Therefore, our workspace is idealized.
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{pictures/workspace1.png} 
+    \caption{Workspace of the robot}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{pictures/workspace2.png} 
+    \caption{Workspace of the robot another view}
+\end{figure}
 \chapter{JACOBIAN MATRIX}
 \section{Topic}
 Formulate the Jacobian matrix for this robot. Is there any singularity?
@@ -116,4 +125,50 @@ J = \frac{\partial \mathbf{X}}{\partial \mathbf{q}} =
 \ell_4 \cos(\theta_1 + \theta_4) + \ell_3 \cos \theta_1 & 0 & \ell_4 \cos(\theta_1 + \theta_4) \\
 0 & 1 & 0
 \end{bmatrix}
+\]
+\textbf{Case of Jacobian Singularity}
+\[
+J = \begin{bmatrix}
+-l_4 \sin(\theta_0 + \theta_4) & -l_3 \sin\theta_1 & 0 & -l_4 \sin(\theta_1 + \theta_4) \\
+l_4 \cos(\theta_0 + \theta_4) + l_3 \cos\theta_1 & 0 & 0 & l_4 \cos(\theta_1 + \theta_4) \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{bmatrix}
+\]
+
+\[
+\det(J_a) = a_{11} \cdot (a_{22} \cdot a_{33} - a_{23} \cdot a_{32}) - a_{12} \cdot (a_{21} \cdot a_{33} - a_{23} \cdot a_{31}) + a_{13} \cdot (a_{21} \cdot a_{32} - a_{22} \cdot a_{31})
+\]
+\[
+= [-l_4 \sin(\theta_0 + \theta_4) - l_3 \sin\theta_1][l_4 \cos(\theta_1 + \theta_4)] + [-l_4 \sin(\theta_1 + \theta_4)][l_4 \cos(\theta_0 + \theta_4) + l_3 \cos\theta_1]
+\]
+\[
+-l_4^2 \sin(\theta_0 + \theta_4) \cos(\theta_1 + \theta_4) + l_3 \sin\theta_1 l_4 \cos(\theta_1 + \theta_4) - l_4^2 \sin(\theta_1 + \theta_4)\cos(\theta_0 + \theta_4) 
+\]
+\[
+- l_3 l_4 \sin(\theta_1 + \theta_4)\cos\theta_1
+\]
+
+\[
+= l_3 l_4 [\sin\theta_1 \cdot \cos(\theta_1 + \theta_4) - l_4 l_3 \sin(\theta_1 + \theta_4) \cdot \cos\theta_1]
+\]
+
+\[
+= -l_3 \cdot l_4 \cdot \sin(-\theta_4)
+\]
+
+\[
+\det(J_a) = 0 \iff -l_4 \cdot l_3 \cdot \sin(-\theta_4) = 0
+\]
+
+\[
+\iff -l_3 \cdot l_4 \cdot \sin(\theta_4) = 0
+\]
+
+\[
+\iff \theta_4 = k\pi (k \in \mathbb{Z}); \theta_4 \in [-90^\circ, 90^\circ]
+\]
+
+\[
+\Rightarrow \text{The point is within the range where } \theta_4 = 0
 \]
