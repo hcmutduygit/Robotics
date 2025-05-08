@@ -2,7 +2,15 @@
 \usepackage{graphicx} % Chèn hình ảnh
 \usepackage{fancyhdr} % Gói hỗ trợ tạo header và footer fancy
 \usepackage{changepage} % Thay đổi lề
+\usepackage[english]{babel}
 
+% Tùy chỉnh các tiêu đề
+\addto\captionsenglish{
+    \renewcommand{\contentsname}{Table of Contents} % Đổi "Mục lục" thành "Table of Contents"
+    \renewcommand{\chaptername}{Chapter} % Đổi "Chương" thành "Chapter"
+    \renewcommand{\bibname}{References} % Đổi "Tài liệu tham khảo" thành "References"
+    \renewcommand{\appendixname}{Appendix} % Đổi "Phụ lục" thành "Appendix"
+}
 % Chèn code
 \usepackage{listings} % Thêm gói listings để chèn code
 \usepackage{xcolor} % Màu cho code
